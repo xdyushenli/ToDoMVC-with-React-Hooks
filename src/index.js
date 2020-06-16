@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Form from './components/Form/Form.js';
+import Input from './components/Input/Input.js';
+import './common/common.less';
+import './index.less';
 
 const wrapper = document.getElementById('container');
 
-wrapper ? ReactDOM.render(<Form />, wrapper) : false;
+wrapper ? ReactDOM.render(
+    <div className='container g-both-center'>
+        <Input />
+    </div>,
+wrapper) : false;
