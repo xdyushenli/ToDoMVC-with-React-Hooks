@@ -23,38 +23,41 @@ let itemId = 1;
 const SHOW_ALL = 0;
 
 const TodoAppReducer = (state, action) => {
-    // TODO: 返回的应该是 state
     switch(action.type) {
         case 'ADD_TODO': {
             const { text } = action;
-            const { todoList } = state;
-            const newTodoList = append({
-                id: itemId++,
-                text,
-                completed: false,
-            }, todoList);
 
-            return assoc('todoList', newTodoList, state);
+            return pipe(
+                prop('todoList'),
+                append({
+                    id: itemId++,
+                    text,
+                    completed: false,
+                }),
+                assoc('todoList', __, state),
+            )(state);
         }
         case 'DELETE_TODO': {
             const { id } = action;
-            const { todoList } = state;
-            const index = findIndex(propEq('id', id), todoList);
-            const newTodoList = remove(index, 1, todoList);
+            const todoList = prop('todoList', state);
 
-            return assoc('todoList', newTodoList, state);
+            return pipe(
+                findIndex(propEq('id', id)),
+                remove(__, 1, todoList),
+                assoc('todoList', __, state)
+            )(todoList);
         }
         case 'TOGGLE_TODO': {
             const { id } = action;
-            const { todoList } = state;
+            const todoList = prop('todoList', state);
             const index = findIndex(propEq('id', id), todoList);
             const currentState = prop('completed', todoList[index]);
-            const newTodoList = pipe(
+            
+            return pipe(
                 assoc('completed', !currentState),
                 update(index, __, todoList),
+                assoc('todoList', __, state),
             )(todoList[index]);
-
-            return assoc('todoList', newTodoList, state);
         }
         case 'SELECT_FILTER': {
             const { filter } = action;

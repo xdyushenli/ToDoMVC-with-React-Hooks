@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TodoApp from './view';
+import TodoApp from './app';
 
 const wrapper = document.getElementById('container');
 
