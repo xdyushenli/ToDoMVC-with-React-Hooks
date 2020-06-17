@@ -1,10 +1,14 @@
 import React, {
+    memo,
     useState,
+    useContext,
 } from 'react';
-import './Input.less';
+import TodoAppContext from '../../context';
+import './index.less';
 
 function Input(props) {
     const [value, setValue] = useState('');
+    const { addTodoItem } = useContext(TodoAppContext);
 
     // 监听 change 事件
     const onInputChange = (e) => {
@@ -18,7 +22,8 @@ function Input(props) {
 
         // 按下回车键
         if (keyCode === 13) {
-            props.addTodoItem(value);
+            addTodoItem(value);
+            setValue('');
         }
     }
 
@@ -32,4 +37,4 @@ function Input(props) {
     )
 }
 
-export default Input;
+export default memo(Input);
