@@ -1,15 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import {
-    append,
-    findIndex,
-    propEq,
-    update,
-    remove,
-    assoc,
-    pipe,
-    prop,
-    __,
-} from 'ramda';
+import * as R from 'ramda';
 import Input from '../components/Input';
 import TodoList from '../components/TodoList';
 import './index.less';
@@ -21,7 +11,7 @@ const TodoAppReducer = (todoList, action) => {
         case 'ADD_TODO': {
             const { text } = action;
 
-            return append({
+            return R.append({
                 id: itemId++,
                 text,
                 completed: false,
@@ -30,19 +20,19 @@ const TodoAppReducer = (todoList, action) => {
         case 'DELETE_TODO': {
             const { id } = action;
 
-            return pipe(
-                findIndex(propEq('id', id)),
-                remove(__, 1, todoList)
+            return R.pipe(
+                R.findIndex(R.propEq('id', id)),
+                R.remove(R.__, 1, todoList)
             )(todoList);
         }
         case 'TOGGLE_TODO': {
             const { id } = action;
-            const index = findIndex(propEq('id', id), todoList);
-            const currentState = prop('completed', todoList[index]);
+            const index = R.findIndex(R.propEq('id', id), todoList);
+            const currentState = R.prop('completed', todoList[index]);
             
-            return pipe(
-                assoc('completed', !currentState),
-                update(index, __, todoList),
+            return R.pipe(
+                R.assoc('completed', !currentState),
+                R.update(index, R.__, todoList),
             )(todoList[index]);
         }
         default: 
@@ -74,7 +64,7 @@ function TodoApp() {
             <Input 
                 value={value}
                 addTodoItem={addTodoItem}
-                setInputValue={setInputValue}
+                handleInputChange={setInputValue}
             />
             <TodoList 
                 todoList={todoList}

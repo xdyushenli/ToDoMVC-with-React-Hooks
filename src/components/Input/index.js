@@ -1,9 +1,7 @@
-import React, {
-    memo,
-} from 'react';
+import React, { memo } from 'react';
 import './index.less';
 
-function Input({ value, addTodoItem, setInputValue }) {
+function Input({ value, addTodoItem, handleInputChange }) {
     // 监听 key down 事件
     const onKeyDown = (e) => {
         const keyCode = e.keyCode;
@@ -20,7 +18,7 @@ function Input({ value, addTodoItem, setInputValue }) {
             className='m-input'
             value={value}
             onKeyDown={onKeyDown}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => handleInputChange(e.target.value)}
         />
     )
 }
