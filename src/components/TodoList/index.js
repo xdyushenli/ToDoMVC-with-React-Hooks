@@ -1,20 +1,42 @@
 import React, {
     memo,
-    useContext,
+    useReducer,
 } from 'react';
 import TodoItem from '../TodoItem';
 import Tab from '../Tab';
 import './index.less';
 
-function TodoList(props) {
-    const {
-        todoList,
-    } = props;
+const SHOW_ALL = 0;
+
+const toggleTabReducer = (filter, action) => {
+    switch(action.type) {
+        case 'SELECT_FILTER': {
+            return action.filter;
+        }
+        default:
+            return filter;
+    }
+}
+
+function TodoList({ todoList, deleteTodoItem, toggleTodoItem }) {
+    const [filter, dispatch] = useReducer(toggleTabReducer, SHOW_ALL);
+
+    const selectFilter = (filter) => {
+        dispatch({ type: 'SELECT_FILTER', filter })
+    }
 
     return (
         <ul className='m-todo-list'>
-            {todoList.map(item => <TodoItem key={item.id} {...item} />)}
-            <Tab />
+            {todoList.map(item => (
+                <TodoItem 
+                    key={item.id} 
+                    filter={filter}
+                    deleteTodoItem={deleteTodoItem}
+                    toggleTodoItem={toggleTodoItem}
+                    {...item} 
+                />
+            ))}
+            <Tab selectFilter={selectFilter} />
         </ul>
     )
 }

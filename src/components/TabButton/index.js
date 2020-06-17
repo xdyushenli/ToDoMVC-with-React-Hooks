@@ -1,14 +1,7 @@
-import React, { memo, useContext } from 'react';
-import TodoAppContext from '../../context';
+import React, { memo } from 'react';
 import './index.less';
 
-function TabButton(props) {
-    const {
-        text,
-        value
-    } = props;
-    const { selectFilter } = useContext(TodoAppContext);
-
+function TabButton({ text, value, selectFilter }) {
     return (
         <button 
             className='u-tab-button'

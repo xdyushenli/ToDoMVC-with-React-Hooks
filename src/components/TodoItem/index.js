@@ -1,22 +1,13 @@
 import React, {
     memo,
-    useContext,
 } from 'react';
-import TodoAppContext from '../../context';
 import './index.less';
 
 const SHOW_ALL = 0;
 const SHOW_COMPLETED = 1;
 const SHOW_UNFINISHED = 2;
 
-function TodoItem(props) {
-    const {
-        id,
-        text,
-        completed,
-    } = props;
-
-    const { toggleTodoItem, deleteTodoItem, filter } = useContext(TodoAppContext);
+function TodoItem({ id, text, completed, filter, toggleTodoItem, deleteTodoItem }) {
     const isItemHide = filter !== SHOW_ALL && ((filter === SHOW_COMPLETED && !completed) || (filter === SHOW_UNFINISHED && completed)); 
 
     return (

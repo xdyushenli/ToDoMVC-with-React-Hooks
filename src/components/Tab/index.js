@@ -2,21 +2,25 @@ import React, { memo } from 'react';
 import TabButton from '../TabButton';
 import './index.less';
 
-function Tab() {
+const SHOW_ALL = 0;
+const SHOW_COMPLETED = 1;
+const SHOW_UNFINISHED = 2;
+
+function Tab({ selectFilter }) {
     const tabList = [{
         text: 'All',
-        value: 0,
+        value: SHOW_ALL,
     }, {
         text: 'Completed',
-        value: 1,
+        value: SHOW_COMPLETED,
     }, {
         text: 'Unfinished',
-        value: 2,
+        value: SHOW_UNFINISHED,
     }]
 
     return (
         <div className='m-tab'>
-            {tabList.map(tabButton => <TabButton key={tabButton.value} {...tabButton} />)}
+            {tabList.map(tabButton => <TabButton key={tabButton.value} {...tabButton} selectFilter={selectFilter} />)}
         </div>
     );
 }
