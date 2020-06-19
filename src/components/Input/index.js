@@ -9,9 +9,8 @@ function Input({ value, addTodoItem, handleInputChange }) {
         // 按下回车键
         if (keyCode === 13) {
             addTodoItem(value);
-            setInputValue('');
         }
-    }
+    };
 
     return (
         <input

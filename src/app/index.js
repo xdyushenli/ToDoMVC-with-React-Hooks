@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import * as R from 'ramda';
 import Input from '../components/Input';
 import TodoList from '../components/TodoList';
@@ -27,13 +27,15 @@ const TodoAppReducer = (todoList, action) => {
         }
         case 'TOGGLE_TODO': {
             const { id } = action;
-            const index = R.findIndex(R.propEq('id', id), todoList);
-            const currentState = R.prop('completed', todoList[index]);
-            
-            return R.pipe(
-                R.assoc('completed', !currentState),
-                R.update(index, R.__, todoList),
-            )(todoList[index]);
+            debugger
+            return R.over(
+                R.compose(
+                    R.lensProp(0),
+                    R.lensProp('completed'),
+                ),
+                R.not,
+                todoList,
+            );
         }
         default: 
             return todoList;
@@ -47,17 +49,18 @@ function TodoApp() {
     // 添加待办
     const addTodoItem = (text) => {
         dispatch({ type: 'ADD_TODO', text });
-    }
+        setInputValue('');
+    };
 
     // 删除待办
     const deleteTodoItem = (id) => {
         dispatch({ type: 'DELETE_TODO', id });
-    }
+    };
 
     // 切换待办状态
     const toggleTodoItem = (id) => {
         dispatch({ type: 'TOGGLE_TODO', id });
-    }
+    };
 
     return (
         <div className='container g-both-center g-cloumn'>

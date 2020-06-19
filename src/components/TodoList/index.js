@@ -16,7 +16,7 @@ const toggleTabReducer = (filter, action) => {
         default:
             return filter;
     }
-}
+};
 
 function TodoList({ todoList, deleteTodoItem, toggleTodoItem }) {
     const [filter, dispatch] = useReducer(toggleTabReducer, SHOW_ALL);
@@ -33,7 +33,7 @@ function TodoList({ todoList, deleteTodoItem, toggleTodoItem }) {
                     filter={filter}
                     deleteTodoItem={deleteTodoItem}
                     toggleTodoItem={toggleTodoItem}
-                    {...item} 
+                    {...item}
                 />
             ))}
             <Tab selectFilter={selectFilter} />
