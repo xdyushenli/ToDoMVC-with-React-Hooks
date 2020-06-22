@@ -1,16 +1,16 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import './index.less';
 
 function Input({ value, addTodoItem, handleInputChange }) {
     // 监听 key down 事件
-    const onKeyDown = (e) => {
+    const onKeyDown = useCallback((e) => {
         const keyCode = e.keyCode;
 
         // 按下回车键
         if (keyCode === 13) {
             addTodoItem(value);
         }
-    };
+    }, [value]);
 
     return (
         <input

@@ -1,6 +1,7 @@
 import React, {
     memo,
     useReducer,
+    useCallback,
 } from 'react';
 import TodoItem from '../TodoItem';
 import Tab from '../Tab';
@@ -21,9 +22,9 @@ const toggleTabReducer = (filter, action) => {
 function TodoList({ todoList, deleteTodoItem, toggleTodoItem }) {
     const [filter, dispatch] = useReducer(toggleTabReducer, SHOW_ALL);
 
-    const selectFilter = (filter) => {
+    const selectFilter = useCallback((filter) => {
         dispatch({ type: 'SELECT_FILTER', filter })
-    }
+    }, []);
 
     return (
         <ul className='m-todo-list'>
